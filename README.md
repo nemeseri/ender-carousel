@@ -1,4 +1,15 @@
 # ender-carousel
 ----
 
-Ender-carousel is a simple carousel plugin for ender. You can create your own gallery with this simple plugin. You might be interested in ender-overlay, which is a dialog/overlay solution for ender.
+Ender-carousel is a really simple carousel plugin for <a href="http://ender.no.de/">Ender</a>. You can easily build your own <strong>gallery</strong> on the top of this plugin. It's just <strong>1.3 KByte</strong> (minified and gzipped).
+
+It requires [Jeesh](https://github.com/ender-js/jeesh) and [Morpheus](https://github.com/ded/morpheus) for animations.
+Even though, you can leave Morpheus out if you are fine without animations. Currently it's tested in Chrome, Firefox, Safari, Opera and IE7+. You can report bugs [here](https://github.com/nemeseri/ender-overlay/issues).
+
+It's even compatible with jQuery! So if you want to include it in a jQuery based project, you can do it without any extra work.
+
+You might be interested in [ender-overlay](https://github.com/nemeseri/ender-overlay), which is a dialog/overlay solution for ender.
+
+I got a lot inspiration from [jQuery Tools](http://flowplayer.org/tools/), thanks for that.
+
+More information, documentation, demos: [http://nemeseri.com/ender-carousel/](http://nemeseri.com/ender-carousel/)
