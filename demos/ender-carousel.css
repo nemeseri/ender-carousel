@@ -1,0 +1,59 @@
+.carousel {
+	width: 570px;
+	margin: 20px 0;
+	padding: 0 29px;
+	position: relative;
+
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-o-user-select:none;
+	user-select:none;
+}
+
+.carousel > .window {
+	overflow: hidden;
+	position: relative;
+	height: 100px;
+}
+
+.carousel ul {
+	list-style: none;
+	margin: 0;
+	width: 10000px;
+	top: 0;
+	left: 0;
+	position: absolute;
+}
+
+.carousel li {
+	float: left;
+	margin: 0 0 0 3px;
+}
+
+.carousel li:first-child {
+	margin: 0;
+}
+
+.carousel > a {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 29px;
+	height: 100px;
+	background-color: #fff;
+	background-color: rgba(255,255,255,.9);
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAARCAYAAACCecGyAAABVklEQVR42uWXwUoCQRiA10BQGliQTobZLUyk9SCFBw/VQTCIfAJPQWDQ3RcIojdYEAQRMTp3iKiX8BB06x0UL9P/gXsZQte9zXj4mMOOy/99rLrjnZQOY/HV9hSr1toaopnXEUc+K4Rv1zsPtkVgZmbHIWkEAhx9tr2prPrpQo1si8DMzI4DLptGIEBHPjzjJrZHAFxwihMBeSUMBQ0uRDAYmL8VZoBAin2z2dUIgCOuZgQC3MnFOZtcjwC44owT8r4wMTa5HMFk4vUafqHfzPxuawTc+Sr4wut9Pac/blJbE+FdXHHGnQgR3VY1v3i5SjsfAUdxneP8319kcFo++Hm+3HU2Am444rrqZUkJw9uzPR4ZZyLgghNuOMZ9be40g/3ZuJW2PgIOuOCU5AB1XCsXp4/nytoIzI4DLklPkZAVwkalYN0pcjlzKCQ+RZoo2yJEM6/jD2dGREFlNP/eAAAAAElFTkSuQmCC);
+	background-repeat: no-repeat;
+	background-position: 8px 39px;
+	text-indent: -9999px;
+}
+
+.carousel > .next {
+	left: auto;
+	right: 0;
+	background-position: -44px 39px;
+}
+
+.carousel img {
+	display: block;
+}

@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html lang="en-us">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>Ender-carousel: Basic Configuration Tutorial</title>
+		<link rel="stylesheet" href="main.css" type="text/css">
+		<link rel="stylesheet" href="ender-carousel.css" type="text/css">
+
+		<!-- syntax highlights -->
+		<link rel="stylesheet" href="http://yandex.st/highlightjs/6.1/styles/github.min.css">
+	</head>
+	<body>
+		<div id="container" class="demo">
+
+			<ul class="breadcrumb">
+				<li><a href="../index.html" class="back-home">Main Page &raquo;</a></li>
+			</ul>
+
+			<h1>Basic Configuration Tutorial</h1>
+
+
+<!-- ========= CAROUSEL HTML START ========== -->
+
+			<div class="carousel">
+				<div class="window">
+					<ul>
+						<li>
+							<a><img src="http://farm6.static.flickr.com/5008/5248981729_3a05d42d32_t.jpg" alt="Undercover" width="100" height="100"></a>
+						</li>
+						<li>
+							<a><img src="http://farm6.static.flickr.com/5123/5329325629_ba31d93a48_t.jpg" alt="The Raid" width="100" height="100"></a>
+						</li>
+						<li>
+							<a><img src="http://farm6.static.flickr.com/5250/5348822142_9c1e7e8bdd_t.jpg" alt="The Price of Information" width="100" height="100"></a>
+						</li>
+						<li>
+							<a><img src="http://farm6.static.flickr.com/5241/5319178865_ab54fb3e02_t.jpg" alt="The Payment" width="100" height="100"></a>
+						</li>
+						<li>
+							<a><img src="http://farm6.static.flickr.com/5008/5248981729_3a05d42d32_t.jpg" alt="Undercover" width="100" height="100"></a>
+						</li>
+						<li>
+							<a><img src="http://farm6.static.flickr.com/5123/5329325629_ba31d93a48_t.jpg" alt="The Raid" width="100" height="100"></a>
+						</li>
+						<li>
+							<a><img src="http://farm6.static.flickr.com/5250/5348822142_9c1e7e8bdd_t.jpg" alt="The Price of Information" width="100" height="100"></a>
+						</li>
+						<li>
+							<a><img src="http://farm6.static.flickr.com/5241/5319178865_ab54fb3e02_t.jpg" alt="The Payment" width="100" height="100"></a>
+						</li>
+						<li>
+							<a><img src="http://farm6.static.flickr.com/5008/5248981729_3a05d42d32_t.jpg" alt="Undercover" width="100" height="100"></a>
+						</li>
+						<li>
+							<a><img src="http://farm6.static.flickr.com/5123/5329325629_ba31d93a48_t.jpg" alt="The Raid" width="100" height="100"></a>
+						</li>
+						<li>
+							<a><img src="http://farm6.static.flickr.com/5250/5348822142_9c1e7e8bdd_t.jpg" alt="The Price of Information" width="100" height="100"></a>
+						</li>
+						<li>
+							<a><img src="http://farm6.static.flickr.com/5241/5319178865_ab54fb3e02_t.jpg" alt="The Payment" width="100" height="100"></a>
+						</li>
+					</ul>
+				</div> <!-- .window -->
+				<a class="prev">Previous</a>
+				<a class="next">Next</a>
+			</div> <!-- .carousel -->
+
+<!-- ========= CAROUSEL HTML END ========== -->
+
+
+			<h2>Include Jeesh and Morpheus</h2>
+			<p>
+				The following Ender packages are the requirements:
+				<a href="http://ender-js.s3.amazonaws.com/jeesh.min.js">Jeesh</a>,
+				<a href="https://raw.github.com/ded/morpheus/master/morpheus.min.js">Morpheus</a> and
+				<a href="https://raw.github.com/ded/morpheus/master/src/ender.js">Ender bridge</a> for Morpheus.
+				You can download and include them simply.<br>
+				Or if you are familiar with <a href="http://ender.no.de/">Ender</a> you can build all the pre-requirements and <strong>ender-carousel</strong> into one file:
+			</p>
+			<pre><code>ender build ender-carousel</code></pre>
+
+			<p class="note">
+				To use ender, you need to install <a href="http://nodejs.org/#download">node.js</a>, <a href="http://npmjs.org/">npm</a> and <a href="http://ender.no.de/">Ender</a><br>
+				Alternatively you can include jQuery instead of Jeesh and Morpheus.
+			</p>
+
+			<h2>Build your HTML structure for the carousel</h2>
+
+			<p>
+				You need to create all the HTML and CSS codes for your carousel. You will need the following elements to make the carousel work:
+			</p>
+
+			<ul>
+				<li>The root element, you will call <samp>$.carousel</samp> on it. Every elements need to be inside this element. It's <samp>.carousel</samp> in the example code</li>
+				<li>Window element - it will be the mask of the animated elem wrapper. Defaults to: <samp>.window</samp></li>
+				<li>Item wrapper - defaults to the first child of the window element.</li>
+				<li>Items: a selector to determine the elements. Defaults to: <samp>li</samp></li>
+				<li>Next pager - defaults to: <samp>.next</samp></li>
+				<li>Previous pager - defaults to: <samp>.prev</samp></li>
+			</ul>
+
+			<h3>Example HTML</h3>
+
+<pre><code>&lt;div class=&quot;carousel&quot;&gt;
+    &lt;div class=&quot;window&quot;&gt;
+        &lt;ul class=&quot;clr&quot;&gt;
+            &lt;li&gt;
+                &lt;a&gt;&lt;img src=&quot;#Your Image URL#&quot; alt=&quot;#Image description#&quot; width=&quot;100&quot; height=&quot;100&quot;&gt;&lt;/a&gt;
+            &lt;/li&gt;
+            [...]
+        &lt;/ul&gt;
+    &lt;/div&gt; &lt;!-- .window --&gt;
+    &lt;a class=&quot;prev&quot;&gt;Previous&lt;/a&gt;
+    &lt;a class=&quot;next&quot;&gt;Next&lt;/a&gt;
+&lt;/div&gt; &lt;!-- .carousel --&gt;
+</code></pre>
+
+			<h2>Add the necessary CSS rules to your stylesheet</h2>
+
+			<p>
+				The most important part is that you need to set the <samp>.window</samp> element to be a relative and make it's overflow hidden. This is because we will animate the item container relative to this element. Now you need to make the item wrapper really wide to fit all the elements. Also, you need to make it an absolute element.
+			</p>
+
+			<p>See the source of this page to have a full picture.</p>
+
+			<h3>Example CSS</h3>
+
+<pre><code>.carousel &gt; .window {
+    overflow: hidden;
+    position: relative;
+    height: 100px;
+}
+
+/*
+    This is the item wrapper,
+    it will be animated.
+*/
+.carousel ul {
+    list-style: none;
+    width: 10000px;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+/*
+    These are the items
+*/
+.carousel li {
+    float: left;
+    margin: 0 0 0 3px;
+}
+
+.carousel li:first-child {
+    margin: 0;
+}</code></pre>
+
+			<h2>Initialize the ender-carousel plugin</h2>
+
+			<p>Now the easy part. You can add a settings object to the carousel method, check the configuration for the details.</p>
+
+<pre><code>$(document).ready(function () {
+    $(&quot;.carousel&quot;).carousel();
+});
+</code></pre>
+
+
+			<p><a href="../index.html">Go back to the documentation</a></p>
+
+		</div> <!-- #container -->
+
+		<script src="../ender.min.js"></script>
+		<script src="../ender.carousel.js"></script>
+		<script>
+			$(document).ready(function () {
+				$(".carousel").carousel({
+					keyboard: true
+				});
+			});
+		</script>
+
+
+		<script src="http://yandex.st/highlightjs/6.1/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-25617420-1']);
+		  _gaq.push(['_trackPageview']);
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	</body>
+</html>

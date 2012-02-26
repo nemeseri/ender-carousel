@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>Ender-carousel - simple scrollable for Ender</title>
+		<link href='http://fonts.googleapis.com/css?family=Paytone+One' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="demos/main.css" type="text/css">
+
+		<!-- syntax highlights -->
+		<link rel="stylesheet" href="http://yandex.st/highlightjs/6.1/styles/github.min.css">
+	</head>
+	<body>
+		<div id="container" class="docs">
+			<h1>ender-carousel</h1>
+			<p>
+				Ender-carousel is a really simple carousel plugin for <a href="http://ender.no.de/">Ender</a>. You can easily build your own <strong>gallery</strong> on the top of this plugin. It's just <strong>1.7 KByte</strong> (minified and gzipped).
+			</p>
+			<p>
+				It requires <a href="https://github.com/ender-js/jeesh">Jeesh</a> and <a href="https://github.com/ded/morpheus">Morpheus</a>. Currently it's tested in Chrome, Firefox, Safari, Opera and IE7+. You can report report bugs <a href="https://github.com/nemeseri/ender-carousel/issues">here</a>.
+				It's even compatible with jQuery! So if you want to include it in a jQuery based project, you can do it without any extra work.
+			</p>
+
+			<p>
+				I got a lot inspiration from <a href="http://flowplayer.org/tools/">jQuery Tools</a>, thanks for that.
+			</p>
+
+			<h2>Demos</h2>
+
+			<ul>
+				<li><a href="demos/basics.html">Basic configuration tutorial</a></li>
+				<li><a href="demos/jquery.html">jQuery compatibility</a></li>
+			</ul>
+
+			<h2>Download Source</h2>
+
+			<p>The source is hosted at <a href="https://github.com/nemeseri/ender-carousel">Github</a>.</p>
+			<a href="https://raw.github.com/nemeseri/ender-carousel/master/ender.carousel.js" class="button">Download v0.0.1</a>
+
+
+			<h2>Carousel configuration</h2>
+
+			<p>
+				Please note that every element selectors will be applied inside the element you called the <samp>$.carousel</samp> method on. More info in the <a href="demos/basics.html">Basic Configuration Tutorial</a>.
+			</p>
+
+			<table class="config">
+				<thead>
+					<tr>
+						<th>Property</th>
+						<th>Default Value</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>window</td>
+						<td>".window"</td>
+						<td>The selector for the window element.</td>
+					</tr>
+					<tr>
+						<td>items</td>
+						<td>"li"</td>
+						<td>The selector for the items.</td>
+					</tr>
+					<tr>
+						<td>nextPager</td>
+						<td>"a.next"</td>
+						<td>Selector for the pager leads to the next page.</td>
+					</tr>
+					<tr>
+						<td>prevPager</td>
+						<td>"a.prev"</td>
+						<td>Selector for the pager leads to the previous page.</td>
+					</tr>
+					<tr>
+						<td>duration</td>
+						<td>400</td>
+						<td>The duration of the scrolling animation.</td>
+					</tr>
+					<tr>
+						<td>keyboard</td>
+						<td>false</td>
+						<td>Adds keyboard support.</td>
+					</tr>
+					<tr>
+						<td>extraOffset</td>
+						<td>0</td>
+						<td>The size of the pages are calculated automatically. If you have drop shadow on your elements, the shadow of the last element might be cut off. You can adjust the position of the last element with this property. (currently only right offset is supported)</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h2 id="methods">Methods</h2>
+
+			<p>The $.carousel method will return the Carousel object. And you can call the following methods on it.</p>
+
+			<table class="methods">
+				<thead>
+					<tr>
+						<th>Method</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>getPageSize()</td>
+						<td>Returns the size of one page.</td>
+					</tr>
+					<tr>
+						<td>getCursor()</td>
+						<td>Returns the place of the cursor. The cursor stays at the first visible item. It's a zero based index.</td>
+					</tr>
+					<tr>
+						<td>nextPage()</td>
+						<td>Jumps to the next page if it's available.</td>
+					</tr>
+					<tr>
+						<td>prevPage()</td>
+						<td>Jumps to the previous page if it's available.</td>
+					</tr>
+					<tr>
+						<td>isVisibleItem(idx)</td>
+						<td>Is the item at the given index visible?</td>
+					</tr>
+					<tr>
+						<td>scrollToItem(idx)</td>
+						<td>Scroll to the item at the given index. It's a zero based index.</td>
+					</tr>
+					<tr>
+						<td>getOptions()</td>
+						<td>Returns the current overlay options.</td>
+					</tr>
+					<tr>
+						<td>setOptions(options)</td>
+						<td>You can update the options any time with this method.</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h2>Author</h2>
+
+			<p>I'm <a href="http://nemeseri.com">Andras Nemeseri</a> a Hungarian front-end developer. You can follow me on <a href="http://twitter.com/nemeseri">Twitter</a>. <br>Thanks to Dustin Diaz &amp; Jacob Thornton for Ender.</p>
+
+		</div> <!-- #container -->
+
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-25617420-1']);
+		  _gaq.push(['_trackPageview']);
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	</body>
+</html>
