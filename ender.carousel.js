@@ -1,4 +1,4 @@
-!function ($) {
+(function ($) {
 
 	// from valentine
 	var is = {
@@ -13,12 +13,12 @@
 		}
 	};
 
-	function extend () {
+	function extend() {
 		// based on jQuery deep merge
 		var options, name, src, copy, clone,
 			target = arguments[0], i = 1, length = arguments.length;
 
-		for (; i < length; i++) {
+		for (; i < length; i += 1) {
 			if ((options = arguments[i]) !== null) {
 				// Extend the base object
 				for (name in options) {
@@ -39,31 +39,24 @@
 		return target;
 	}
 
-	function clone (obj) {
-		if (null == obj || "object" != typeof obj) return obj;
-		var copy = obj.constructor();
-		for (var attr in obj) {
-			if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+	function clone(obj) {
+		if (null === obj || "object" !== typeof obj) {
+			return obj;
+		}
+		var copy = obj.constructor(),
+			attr;
+		for (attr in obj) {
+			if (obj.hasOwnProperty(attr)) {
+				copy[attr] = obj[attr];
+			}
 		}
 		return copy;
-	}
-
-	function bind (fn, context) {
-		var slice = Array.prototype.slice,
-			args = slice.call(arguments, 2),
-			binded = function() {
-				return fn.apply(
-					context,
-					args.concat(slice.call(arguments))
-				);
-			};
-		return binded;
 	}
 
 	/*
 		Masking jQuery and Morpheus differences
 	*/
-	function animate (el, animationSettins) {
+	function animate(el, animationSettins) {
 		if (window.ender) {
 			// use morpheus
 			el.animate(animationSettins);
@@ -77,8 +70,33 @@
 		}
 	}
 
-	function Carousel (el, options) {
+	// from jquery
+	function proxy(fn, context) {
+		var slice = Array.prototype.slice,
+			args = slice.call(arguments, 2);
+		return function () {
+			return fn.apply(context, args.concat(slice.call(arguments)));
+		};
+	}
+
+	/*
+		Carousel Constructor
+	*/
+	function Carousel(el, options) {
 		this.init(el, options);
+
+		// only return the API
+		// instead of this
+		return {
+			getPageSize: proxy(this.getPageSize, this),
+			getCursor: proxy(this.getCursor, this),
+			nextPage: proxy(this.nextPage, this),
+			prevPage: proxy(this.prevPage, this),
+			isVisibleItem: proxy(this.isVisibleItem, this),
+			scrollToItem: proxy(this.scrollToItem, this),
+			getOptions: proxy(this.getOptions, this),
+			setOptions: proxy(this.setOptions, this)
+		};
 	}
 
 	Carousel.prototype = {
@@ -149,11 +167,11 @@
 				this.hideNextPager();
 			}
 
-			this.$nextPager.click(bind(this.nextPage, this));
-			this.$prevPager.click(bind(this.prevPage, this));
+			this.$nextPager.click(proxy(this.nextPage, this));
+			this.$prevPager.click(proxy(this.prevPage, this));
 
 			if (this.options.keyboard) {
-				$(document).bind("keyup", bind(this.onKeyUp, this));
+				$(document).bind("keyup", proxy(this.onKeyUp, this));
 			}
 
 			this.$el.addClass("carousel-inited");
@@ -228,8 +246,8 @@
 
 			scrollTo = this.cursor * this.itemWidth;
 			if (this.cursor === this.lastPosition) {
-				scrollTo = scrollTo - (this.windowWidth - this.pageWidth + this.itemMargin)
-					+ this.options.extraOffset;
+				scrollTo = scrollTo - (this.windowWidth - this.pageWidth + this.itemMargin) +
+					this.options.extraOffset;
 			}
 
 			scrollTo *= -1;
@@ -257,7 +275,7 @@
 			var i = 0,
 				il = this.$items.length;
 
-			for (; i < il; i++) {
+			for (; i < il; i += 1) {
 				if ($(this.$items.get(i)).hasClass("active")) {
 					return i;
 				}
@@ -314,8 +332,7 @@
 		}
 	};
 
-
 	$.fn.carousel = function (options) {
 		return new Carousel(this.first(), options);
 	};
-}(window.ender || window.jQuery);
+}(window.ender || window.jQuery));
