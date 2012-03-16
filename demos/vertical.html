@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html lang="en-us">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>Ender-carousel: Vertical Aligned Carousel</title>
+		<link rel="stylesheet" href="main.css" type="text/css">
+		<link rel="stylesheet" href="ender-carousel-vertical.css" type="text/css">
+
+		<!-- syntax highlights -->
+		<link rel="stylesheet" href="http://yandex.st/highlightjs/6.1/styles/github.min.css">
+	</head>
+	<body>
+		<div id="container" class="demo">
+
+			<ul class="breadcrumb">
+				<li><a href="../index.html" class="back-home">Main Page &raquo;</a></li>
+			</ul>
+
+			<h1>Vertical Aligned Carousel</h1>
+
+			<div class="clr">
+
+<!-- ========= CAROUSEL HTML START ========== -->
+
+				<div class="carousel vertical">
+					<a class="prev disabled">Previous</a>
+					<div class="window">
+						<ul>
+							<li>
+								<img src="http://farm6.static.flickr.com/5008/5248981729_3a05d42d32_t.jpg" alt="Undercover" width="100" height="100">
+							</li>
+							<li>
+								<img src="http://farm6.static.flickr.com/5123/5329325629_ba31d93a48_t.jpg" alt="The Raid" width="100" height="100">
+							</li>
+							<li>
+								<img src="http://farm6.static.flickr.com/5250/5348822142_9c1e7e8bdd_t.jpg" alt="The Price of Information" width="100" height="100">
+							</li>
+							<li>
+								<img src="http://farm6.static.flickr.com/5241/5319178865_ab54fb3e02_t.jpg" alt="The Payment" width="100" height="100">
+							</li>
+							<li>
+								<img src="http://farm6.static.flickr.com/5008/5248981729_3a05d42d32_t.jpg" alt="Undercover" width="100" height="100">
+							</li>
+							<li>
+								<img src="http://farm6.static.flickr.com/5123/5329325629_ba31d93a48_t.jpg" alt="The Raid" width="100" height="100">
+							</li>
+							<li>
+								<img src="http://farm6.static.flickr.com/5250/5348822142_9c1e7e8bdd_t.jpg" alt="The Price of Information" width="100" height="100">
+							</li>
+							<li>
+								<img src="http://farm6.static.flickr.com/5241/5319178865_ab54fb3e02_t.jpg" alt="The Payment" width="100" height="100">
+							</li>
+							<li>
+								<img src="http://farm6.static.flickr.com/5008/5248981729_3a05d42d32_t.jpg" alt="Undercover" width="100" height="100">
+							</li>
+							<li>
+								<img src="http://farm6.static.flickr.com/5123/5329325629_ba31d93a48_t.jpg" alt="The Raid" width="100" height="100">
+							</li>
+							<li>
+								<img src="http://farm6.static.flickr.com/5250/5348822142_9c1e7e8bdd_t.jpg" alt="The Price of Information" width="100" height="100">
+							</li>
+							<li>
+								<img src="http://farm6.static.flickr.com/5241/5319178865_ab54fb3e02_t.jpg" alt="The Payment" width="100" height="100">
+							</li>
+						</ul>
+					</div> <!-- .window -->
+					<a class="next">Next</a>
+				</div> <!-- .carousel -->
+
+<!-- ========= CAROUSEL HTML END ========== -->
+
+				<div class="left">
+
+					<h2>Build your HTML structure for the carousel</h2>
+
+					<p>
+						For the vertical carousel you can use the same HTML as you've seen in the <a href="basics.html">basic tutorial</a>. For the most simple CSS possible I've replaced the previous pager.
+					</p>
+
+					<p>Just for the clarity, here is a recap of the elements:</p>
+
+					<ul>
+						<li>The root element, you will call <samp>$.carousel</samp> on it. Every elements need to be inside this element. It's <samp>.carousel</samp> in the example code</li>
+						<li>Window element - it will be the mask of the animated elem wrapper. Defaults to: <samp>.window</samp></li>
+						<li>Item wrapper - defaults to the first child of the window element.</li>
+						<li>Items: a selector to determine the elements. Defaults to: <samp>li</samp></li>
+						<li>Next pager - defaults to: <samp>.next</samp></li>
+						<li>Previous pager - defaults to: <samp>.prev</samp></li>
+					</ul>
+
+					<h3>Example HTML</h3>
+
+<pre><code>&lt;div class=&quot;carousel&quot;&gt;
+    &lt;a class=&quot;prev&quot;&gt;Previous&lt;/a&gt;
+    &lt;div class=&quot;window&quot;&gt;
+        &lt;ul class=&quot;clr&quot;&gt;
+            &lt;li&gt;
+                &lt;img src=&quot;#Your Image URL#&quot; alt=&quot;#Img desc#&quot; width=&quot;100&quot; height=&quot;100&quot;&gt;
+            &lt;/li&gt;
+            [...]
+        &lt;/ul&gt;
+    &lt;/div&gt; &lt;!-- .window --&gt;
+    &lt;a class=&quot;next&quot;&gt;Next&lt;/a&gt;
+&lt;/div&gt; &lt;!-- .carousel --&gt;
+</code></pre>
+				</div> <!-- .left -->
+			</div> <!-- .clr -->
+
+			<h2>Add the necessary CSS rules to your stylesheet</h2>
+
+			<p>
+				The CSS for this type of carousel is simpler than the horizontal one. Here is the core of the CSS, but you should check the <a href="ender-carousel-vertical.css">ender-carousel-vertical.css</a> file for the full version of the CSS.
+			</p>
+
+			<h3>Example CSS</h3>
+
+<pre><code>.carousel &gt; .window {
+    overflow: hidden;
+    position: relative;
+    height: 370px;
+}
+
+/*
+    This is the item wrapper,
+    it will be animated.
+*/
+.carousel ul {
+    list-style: none;
+    height: 10000px;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+/*
+    These are the items
+*/
+.carousel li {
+    margin: 3px 0 0;
+}
+
+.carousel li:first-child {
+    margin: 0;
+}</code></pre>
+
+			<h2>Initialize the ender-carousel plugin</h2>
+
+			<p>Now the easy part. You can add a settings object to the carousel method, check the configuration for the details. Please note that currently the keyboard support is buggy if the carousel is vertical.</p>
+
+<pre><code>$(document).ready(function () {
+    $(&quot;.carousel&quot;).carousel({
+        vertical: true
+    });
+});
+</code></pre>
+
+
+			<p><a href="../index.html">Go back to the documentation</a></p>
+
+		</div> <!-- #container -->
+
+		<script src="../ender.min.js"></script>
+		<script src="../ender.carousel.js"></script>
+		<script>
+			$(document).ready(function () {
+				$(".carousel").carousel({
+					vertical: true
+				});
+			});
+		</script>
+
+
+		<script src="http://yandex.st/highlightjs/6.1/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-25617420-1']);
+		  _gaq.push(['_trackPageview']);
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	</body>
+</html>

@@ -34,6 +34,10 @@
 	margin: 0;
 }
 
+.carousel img {
+	display: block;
+}
+
 .carousel > a {
 	position: absolute;
 	top: 0;
@@ -54,6 +58,8 @@
 	background-position: -44px 39px;
 }
 
-.carousel img {
-	display: block;
+.carousel > .disabled {
+	opacity: 0.4;
+	-moz-opacity: 0.4;
+	filter:alpha(opacity=40);
 }

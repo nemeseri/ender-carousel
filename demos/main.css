@@ -240,3 +240,15 @@ pre code {
 	font-weight: bold;
 	margin: 0 0 15px;
 }
+
+/* ========= VERTICAL DEMO ============= */
+
+.carousel.vertical {
+	float: left;
+	margin: 20px 40px 20px 0;
+}
+
+div.left {
+	width: 760px;
+	float: left;
+}

@@ -1,7 +1,7 @@
 # ender-carousel
 ----
 
-Ender-carousel is a really simple carousel plugin for <a href="http://ender.no.de/">Ender</a>. You can easily build your own <strong>gallery</strong> on the top of this plugin. It's just <strong>1.3 KByte</strong> (minified and gzipped).
+Ender-carousel is a really simple carousel plugin for <a href="http://ender.no.de/">Ender</a>. You can easily build your own <strong>gallery</strong> on the top of this plugin. It's just <strong>1.7 KByte</strong> (minified and gzipped).
 
 It requires [Jeesh](https://github.com/ender-js/jeesh) and [Morpheus](https://github.com/ded/morpheus) for animations.
 Even though, you can leave Morpheus out if you are fine without animations. Currently it's tested in Chrome, Firefox, Safari, Opera and IE7+. You can report bugs [here](https://github.com/nemeseri/ender-overlay/issues).

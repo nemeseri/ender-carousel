@@ -148,15 +148,16 @@
 
 	Carousel.prototype = {
 		init: function (el, options) {
-			var $secondItem,
-				opt;
+			var opt;
 
 			this.options = {
 				window: ".window",
 				items: "li",
 				nextPager: "a.next",
 				prevPager: "a.prev",
+				disabledClass: "disabled",
 				duration: 400,
+				vertical: false,
 				keyboard: false,
 				css3transition: false,
 				extraOffset: 0
@@ -183,15 +184,7 @@
 				opt.prevPager
 			);
 
-			$secondItem = this.$items.first().next();
-			this.itemMargin = parseInt($secondItem.css("margin-left"), 10) +
-				parseInt($secondItem.css("margin-right"), 10);
-			this.itemWidth = $secondItem.width() + this.itemMargin;
-
-			this.windowWidth = this.$window.width();
-			this.pageSize = Math.floor((this.windowWidth + this.itemMargin) / this.itemWidth);
-			this.pageWidth = this.pageSize * this.itemWidth;
-			this.lastPosition = this.$items.length - this.pageSize;
+			this.setDimensions();
 
 			if (this.$items.length <= this.pageSize) {
 				this.hidePrevPager();
@@ -229,6 +222,30 @@
 			}
 
 			this.$el.addClass("carousel-inited");
+		},
+
+		setDimensions: function () {
+			var $secondItem,
+				alignedDimension = "width",
+				marginType = ["margin-left", "margin-right"];
+
+			if (this.options.vertical) {
+				alignedDimension = "height";
+				marginType = ["margin-top", "margin-bottom"];
+			}
+
+			$secondItem = this.$items.first().next();
+			this.itemMargin = parseInt($secondItem.css(marginType[0]), 10) +
+				parseInt($secondItem.css(marginType[1]), 10);
+			this.itemDimension = $secondItem[alignedDimension]() + this.itemMargin;
+
+			this.windowDimension = this.$window[alignedDimension]();
+			this.pageSize = Math.floor(
+				(this.windowDimension + this.itemMargin) / this.itemDimension
+			);
+			this.pageDimension = this.pageSize * this.itemDimension;
+			this.lastPosition = this.$items.length - this.pageSize;
+
 		},
 
 		nextPage: function (e) {
@@ -282,7 +299,9 @@
 
 		scrollToItem: function (idx, doNotAnimate) {
 			var animateTo,
-				scrollTo;
+				scrollTo,
+				direction = this.options.vertical ? "top" : "left",
+				animObj = {};
 
 			this.cursor = idx;
 
@@ -298,30 +317,37 @@
 				this.showNextPager();
 			}
 
-			scrollTo = this.cursor * this.itemWidth;
+			scrollTo = this.cursor * this.itemDimension;
 			if (this.cursor === this.lastPosition) {
-				scrollTo = scrollTo - (this.windowWidth - this.pageWidth + this.itemMargin) +
+				scrollTo = scrollTo -
+					(this.windowDimension - this.pageDimension + this.itemMargin) +
 					this.options.extraOffset;
 			}
 
 			scrollTo *= -1;
+			animObj[direction] = scrollTo;
 			if (doNotAnimate) {
-				this.$itemWrapper.css({
-					left: scrollTo
-				});
+				this.$itemWrapper.css(animObj);
 			} else {
-				animate(this.$itemWrapper, {
-					left: scrollTo,
-					duration: this.options.duration
-				}, this.options.css3transition);
+				animObj.duration = this.options.duration;
+				animate(this.$itemWrapper, animObj, this.options.css3transition);
 			}
 		},
 
 		onKeyUp: function (e) {
-			if (e.keyCode === 39) {
-				this.nextPage();
-			} else if (e.keyCode === 37) {
-				this.prevPage();
+			if (this.options.vertical) {
+				e.stop(); // not working ;(
+				if (e.keyCode === 40) {
+					this.nextPage();
+				} else if (e.keyCode === 38) {
+					this.prevPage();
+				}
+			} else {
+				if (e.keyCode === 39) {
+					this.nextPage();
+				} else if (e.keyCode === 37) {
+					this.prevPage();
+				}
 			}
 		},
 
@@ -339,27 +365,27 @@
 		},
 
 		hideNextPager: function () {
-			this.$nextPager.css({
-				display: "none"
-			});
+			this.$nextPager.addClass(
+				this.options.disabledClass
+			);
 		},
 
 		hidePrevPager: function () {
-			this.$prevPager.css({
-				display: "none"
-			});
+			this.$prevPager.addClass(
+				this.options.disabledClass
+			);
 		},
 
 		showNextPager: function () {
-			this.$nextPager.css({
-				display: ""
-			});
+			this.$nextPager.removeClass(
+				this.options.disabledClass
+			);
 		},
 
 		showPrevPager: function () {
-			this.$prevPager.css({
-				display: ""
-			});
+			this.$prevPager.removeClass(
+				this.options.disabledClass
+			);
 		},
 
 		getPageSize: function () {
