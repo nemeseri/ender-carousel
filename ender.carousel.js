@@ -1,7 +1,10 @@
 (function ($) {
 
+	var is,
+		transition;
+
 	// from valentine
-	var is = {
+	is = {
 		fun: function (f) {
 			return typeof f === 'function';
 		},
@@ -12,6 +15,38 @@
 			return o instanceof Object && !is.fun(o) && !is.arr(o);
 		}
 	};
+
+	/*
+		Based on Bootstrap
+		Mozilla and Webkit support only
+	*/
+	transition = (function () {
+		var st = document.createElement("div").style,
+			transitionEnd = "TransitionEnd",
+			transitionProp = "Transition",
+			support = st.transition !== undefined ||
+				st.WebkitTransition !== undefined ||
+				st.MozTransition !== undefined;
+
+		return support && {
+			prop: (function () {
+				if (st.WebkitTransition !== undefined) {
+					transitionProp = "WebkitTransition";
+				} else if (st.MozTransition !== undefined) {
+					transitionProp = "MozTransition";
+				}
+				return transitionProp;
+			}()),
+			end: (function () {
+				if (st.WebkitTransition !== undefined) {
+					transitionEnd = "webkitTransitionEnd";
+				} else if (st.MozTransition !== undefined) {
+					transitionEnd = "transitionend";
+				}
+				return transitionEnd;
+			}())
+		};
+	}());
 
 	function extend() {
 		// based on jQuery deep merge
@@ -53,23 +88,6 @@
 		return copy;
 	}
 
-	/*
-		Masking jQuery and Morpheus differences
-	*/
-	function animate(el, animationSettins) {
-		if (window.ender) {
-			// use morpheus
-			el.animate(animationSettins);
-		} else {
-			// convert animation properties
-			var duration = animationSettins.duration,
-				easing = animationSettins.easing,
-				onComplete = animationSettins.complete;
-
-			el.animate(animationSettins, duration, easing, onComplete);
-		}
-	}
-
 	// from jquery
 	function proxy(fn, context) {
 		var slice = Array.prototype.slice,
@@ -77,6 +95,35 @@
 		return function () {
 			return fn.apply(context, args.concat(slice.call(arguments)));
 		};
+	}
+
+	function animate(el, animationSettings, css3transition) {
+		var duration = animationSettings.duration,
+			easing = animationSettings.easing,
+			complete = animationSettings.complete ? animationSettings.complete : function () {},
+			dummy;
+
+		if (css3transition && transition) {
+			// css3 transitions instead of JS animation
+			dummy = el[0].offsetWidth; // force reflow; source: bootstrap
+			el[0].style[transition.prop] = "all " + animationSettings.duration + "ms";
+
+			// takaritas
+			// valamiert lefut azonnal a complete fgv enelkul..
+			delete animationSettings.complete;
+			delete animationSettings.duration;
+			delete animationSettings.easing;
+
+			el.css(animationSettings);
+			el.unbind(transition.end);
+			el.bind(transition.end, complete);
+		} else if (window.ender) {
+			// use morpheus
+			el.animate(animationSettings);
+		} else {
+			// use animate from jquery
+			el.animate(animationSettings, duration, easing, complete);
+		}
 	}
 
 	/*
@@ -101,7 +148,8 @@
 
 	Carousel.prototype = {
 		init: function (el, options) {
-			var $secondItem;
+			var $secondItem,
+				opt;
 
 			this.options = {
 				window: ".window",
@@ -110,23 +158,29 @@
 				prevPager: "a.prev",
 				duration: 400,
 				keyboard: false,
+				css3transition: false,
 				extraOffset: 0
 			};
 			this.setOptions(options);
+			opt = this.options;
+
+			if (opt.css3transition && ! transition) {
+				opt.css3transition = false;
+			}
 
 			this.$el = $(el);
 			this.$window = this.$el.find(
-				this.options.window
+				opt.window
 			);
 			this.$itemWrapper = this.$window.children().first();
 			this.$items = this.$el.find(
-				this.options.items
+				opt.items
 			);
 			this.$nextPager = this.$el.find(
-				this.options.nextPager
+				opt.nextPager
 			);
 			this.$prevPager = this.$el.find(
-				this.options.prevPager
+				opt.prevPager
 			);
 
 			$secondItem = this.$items.first().next();
@@ -170,7 +224,7 @@
 			this.$nextPager.click(proxy(this.nextPage, this));
 			this.$prevPager.click(proxy(this.prevPage, this));
 
-			if (this.options.keyboard) {
+			if (opt.keyboard) {
 				$(document).bind("keyup", proxy(this.onKeyUp, this));
 			}
 
@@ -259,7 +313,7 @@
 				animate(this.$itemWrapper, {
 					left: scrollTo,
 					duration: this.options.duration
-				});
+				}, this.options.css3transition);
 			}
 		},
 

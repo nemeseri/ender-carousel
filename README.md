@@ -6,6 +6,8 @@ Ender-carousel is a really simple carousel plugin for <a href="http://ender.no.d
 It requires [Jeesh](https://github.com/ender-js/jeesh) and [Morpheus](https://github.com/ded/morpheus) for animations.
 Even though, you can leave Morpheus out if you are fine without animations. Currently it's tested in Chrome, Firefox, Safari, Opera and IE7+. You can report bugs [here](https://github.com/nemeseri/ender-overlay/issues).
 
+If you want to use <strong>CSS3 transitions</strong> instead of JS animations, just set the "css3transition" property to true. Only recent Firefox and Webkit based browsers will use transitions. Older browsers will fall back to JS animations.
+
 It's even compatible with jQuery! So if you want to include it in a jQuery based project, you can do it without any extra work.
 
 You might be interested in [ender-overlay](https://github.com/nemeseri/ender-overlay), which is a dialog/overlay solution for ender.
