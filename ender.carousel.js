@@ -180,7 +180,7 @@
 				duration: 400,
 				vertical: false,
 				keyboard: false,
-				css3transition: true,
+				css3transition: false,
 				extraOffset: 0
 			};
 			this.setOptions(options);

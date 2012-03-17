@@ -1,7 +1,7 @@
 {
 	"name": "ender-carousel",
 	"description": "Simple carousel for Ender",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"homepage": "http://nemeseri.com/ender-carousel/",
 	"author": "Andras Nemeseri <andras@nemeseri.com> (http://nemeseri.com)",
 	"keywords": ["ender", "carousel", "ui", "scrollable", "scroller"],
