@@ -1,4 +1,4 @@
-(function ($) {
+!function ($) {
 
 	var is,
 		transition;
@@ -415,4 +415,4 @@
 	$.fn.carousel = function (options) {
 		return new Carousel(this.first(), options);
 	};
-}(window.ender || window.jQuery));
+}(window.ender || window.jQuery);
