@@ -97,32 +97,53 @@
 		};
 	}
 
-	function animate(el, animationSettings, css3transition) {
-		var duration = animationSettings.duration,
-			easing = animationSettings.easing,
-			complete = animationSettings.complete ? animationSettings.complete : function () {},
+	function animate(options) {
+		var el = options.el,
+			complete = options.complete ? options.complete : function () {},
+			animation,
 			dummy;
 
-		if (css3transition && transition) {
-			// css3 transitions instead of JS animation
+		// no animation obj OR animation is not available,
+		// fallback to css and call the callback
+		if (! options.animation ||
+			! (el.animate || (options.css3transition && transition))) {
+			el.css(options.fallbackCss);
+			complete();
+			return;
+		}
+
+		// we will animate, apply start CSS
+		if (options.animStartCss) {
+			if (options.animStartCss.opacity === 0) {
+				options.animStartCss.opacity = 0.01; // ie quirk
+			}
+			el.css(options.animStartCss);
+		}
+		animation = options.animation;
+
+		// css3 setted, if available apply the css
+		if (options.css3transition && transition) {
 			dummy = el[0].offsetWidth; // force reflow; source: bootstrap
-			el[0].style[transition.prop] = "all " + animationSettings.duration + "ms";
+			el[0].style[transition.prop] = "all " + animation.duration + "ms";
 
 			// takaritas
-			// valamiert lefut azonnal a complete fgv enelkul..
-			delete animationSettings.complete;
-			delete animationSettings.duration;
-			delete animationSettings.easing;
+			delete animation.duration;
+			delete animation.easing;
 
-			el.css(animationSettings);
-			el.unbind(transition.end);
-			el.bind(transition.end, complete);
+			el.css(animation);
+			//el.unbind(transition.end);
+			el.bind(transition.end, function () {
+				// delete transition properties and events
+				el.unbind(transition.end);
+				el[0].style[transition.prop] = "none";
+				complete();
+			});
 		} else if (window.ender) {
 			// use morpheus
-			el.animate(animationSettings);
+			el.animate(extend(animation, {"complete": complete}));
 		} else {
 			// use animate from jquery
-			el.animate(animationSettings, duration, easing, complete);
+			el.animate(animation, animation.duration, animation.easing, complete);
 		}
 	}
 
@@ -159,7 +180,7 @@
 				duration: 400,
 				vertical: false,
 				keyboard: false,
-				css3transition: false,
+				css3transition: true,
 				extraOffset: 0
 			};
 			this.setOptions(options);
@@ -326,28 +347,24 @@
 
 			scrollTo *= -1;
 			animObj[direction] = scrollTo;
-			if (doNotAnimate) {
-				this.$itemWrapper.css(animObj);
-			} else {
+
+			if (! doNotAnimate) {
 				animObj.duration = this.options.duration;
-				animate(this.$itemWrapper, animObj, this.options.css3transition);
 			}
+
+			animate({
+				el: this.$itemWrapper,
+				animation: doNotAnimate ? false : animObj,
+				fallbackCss: animObj,
+				css3transition: this.options.css3transition
+			});
 		},
 
 		onKeyUp: function (e) {
-			if (this.options.vertical) {
-				e.stop(); // not working ;(
-				if (e.keyCode === 40) {
-					this.nextPage();
-				} else if (e.keyCode === 38) {
-					this.prevPage();
-				}
-			} else {
-				if (e.keyCode === 39) {
-					this.nextPage();
-				} else if (e.keyCode === 37) {
-					this.prevPage();
-				}
+			if (e.keyCode === 39) {
+				this.nextPage();
+			} else if (e.keyCode === 37) {
+				this.prevPage();
 			}
 		},
 
