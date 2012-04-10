@@ -322,7 +322,11 @@
 			var animateTo,
 				scrollTo,
 				direction = this.options.vertical ? "top" : "left",
-				animObj = {};
+				animObj = {},
+				// Active class vars
+				cursor_old = this.cursor,
+				itemslen = this.$items.length,
+				i;
 
 			this.cursor = idx;
 
@@ -350,6 +354,19 @@
 
 			if (! doNotAnimate) {
 				animObj.duration = this.options.duration;
+			}
+
+			if (this.getPageSize() === 1) {
+				$(this.$items.get(cursor_old)).removeClass('active');
+				$(this.$items.get(idx)).addClass('active');
+			} else {
+				this.$items.removeClass('active');
+				
+				for (i = 0; i < itemslen; i += 1) {
+					if (this.isVisibleItem(i)) {
+						$(this.$items.get(i)).addClass('active');
+					}
+				}
 			}
 
 			animate({
