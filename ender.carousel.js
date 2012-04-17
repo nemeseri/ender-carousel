@@ -176,6 +176,7 @@
 				items: "li",
 				nextPager: "a.next",
 				prevPager: "a.prev",
+				activeClass: null,
 				disabledClass: "disabled",
 				duration: 400,
 				vertical: false,
@@ -322,8 +323,12 @@
 			var animateTo,
 				scrollTo,
 				direction = this.options.vertical ? "top" : "left",
-				animObj = {};
+				animObj = {},
+				activeClass,
+				itemslen,
+				i;
 
+			this.cursor_previous = this.cursor;
 			this.cursor = idx;
 
 			if (this.cursor === 0) {
@@ -350,6 +355,24 @@
 
 			if (! doNotAnimate) {
 				animObj.duration = this.options.duration;
+			}
+
+			if (this.options.activeClass) {
+				activeClass = this.options.activeClass;
+
+				if (this.getPageSize() === 1) {
+					$(this.$items.get(this.cursor_previous)).removeClass(activeClass);
+					$(this.$items.get(idx)).addClass(activeClass);
+				} else {
+					itemslen = this.$items.length;
+					this.$items.removeClass(activeClass);
+
+					for (i = 0; i < itemslen; i += 1) {
+						if (this.isVisibleItem(i)) {
+							$(this.$items.get(i)).addClass(activeClass);
+						}
+					}
+				}
 			}
 
 			animate({
