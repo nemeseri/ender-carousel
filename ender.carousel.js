@@ -222,8 +222,12 @@
 			}
 
 			this.cursor = this.getActiveIndex();
+			
 			if (this.cursor < 0) {
-				this.$items.first().addClass("active");
+				for (var i = 0; i < this.pageSize; i += 1) {
+					$(this.$items.get(i)).addClass("active");
+				}
+
 				this.cursor = 0;
 			}
 
@@ -306,7 +310,8 @@
 
 		pagerToItem: function (e) {
 			var i = 0,
-				li = e.target;
+				li = e.target,
+				itemsLen = this.$items.length;
 
 			e.preventDefault();
 
@@ -314,7 +319,11 @@
 				i += 1;
 			}
 
-			this.scrollToItem(i);
+			if (i > (itemsLen - this.pageSize)) {
+				this.scrollToItem(itemsLen - this.pageSize);
+			} else {
+				this.scrollToItem(i);
+			}
 		},
 
 		nextPage: function (e) {
