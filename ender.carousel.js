@@ -207,13 +207,13 @@
 				opt.prevPager
 			);
 
+			this.setDimensions();
+
 			if (opt.pager) {
 				this.createPager();
 
 				this.$pagerItems = this.$pager.find("li");
 			}
-
-			this.setDimensions();
 
 			if (this.$items.length <= this.pageSize) {
 				this.hidePrevPager();
@@ -300,7 +300,7 @@
 			for (i = 0; i < itemsLen; i += 1) {
 				pagerItem = document.createElement("li");
 
-				if (typeof this.cursor === "undefined" && i === 0) {
+				if (i < this.pageSize) {
 					pagerItem.className = "active";
 				}
 
