@@ -174,6 +174,7 @@
 			this.options = {
 				window: ".window",
 				items: "li",
+				pager: null,
 				nextPager: "a.next",
 				prevPager: "a.prev",
 				activeClass: null,
@@ -205,6 +206,12 @@
 			this.$prevPager = this.$el.find(
 				opt.prevPager
 			);
+
+			if (opt.pager) {
+				this.createPager();
+
+				this.$pagerItems = this.$pager.find("li");
+			}
 
 			this.setDimensions();
 
@@ -239,6 +246,10 @@
 			this.$nextPager.click(proxy(this.nextPage, this));
 			this.$prevPager.click(proxy(this.prevPage, this));
 
+			if (opt.pager) {
+				this.$pagerItems.click(proxy(this.pagerToItem, this));
+			}
+
 			if (opt.keyboard) {
 				$(document).bind("keyup", proxy(this.onKeyUp, this));
 			}
@@ -268,6 +279,42 @@
 			this.pageDimension = this.pageSize * this.itemDimension;
 			this.lastPosition = this.$items.length - this.pageSize;
 
+		},
+
+		createPager: function () {
+			var pagerItemsFrag = document.createDocumentFragment(),
+				pagerItem,
+				itemsLen = this.$items.length,
+				i;
+
+			this.$pager = this.$el.find(
+				this.options.pager
+			);
+
+			for (i = 0; i < itemsLen; i += 1) {
+				pagerItem = document.createElement("li");
+
+				if (typeof this.cursor === "undefined" && i === 0) {
+					pagerItem.className = "active";
+				}
+
+				pagerItemsFrag.appendChild(pagerItem);
+			}
+
+			this.$pager.empty().get(0).appendChild(pagerItemsFrag);
+		},
+
+		pagerToItem: function (e) {
+			var i = 0,
+				li = e.target;
+
+			e.preventDefault();
+
+			while((li = li.previousSibling) !== null) {
+				i += 1;
+			}
+
+			this.scrollToItem(i);
 		},
 
 		nextPage: function (e) {
@@ -324,11 +371,11 @@
 				scrollTo,
 				direction = this.options.vertical ? "top" : "left",
 				animObj = {},
-				activeClass,
-				itemslen,
+				activeClassName = this.options.activeClass || "active",
+				itemsLen = this.$items.length,
 				i;
 
-			this.cursor_previous = this.cursor;
+			this.cursorPrevious = this.cursor;
 			this.cursor = idx;
 
 			if (this.cursor === 0) {
@@ -361,7 +408,7 @@
 				activeClass = this.options.activeClass;
 
 				if (this.getPageSize() === 1) {
-					$(this.$items.get(this.cursor_previous)).removeClass(activeClass);
+					$(this.$items.get(this.cursorPrevious)).removeClass(activeClass);
 					$(this.$items.get(idx)).addClass(activeClass);
 				} else {
 					itemslen = this.$items.length;
@@ -370,6 +417,21 @@
 					for (i = 0; i < itemslen; i += 1) {
 						if (this.isVisibleItem(i)) {
 							$(this.$items.get(i)).addClass(activeClass);
+						}
+					}
+				}
+			}
+
+			if (this.options.pager) {
+				if (this.getPageSize() === 1) {
+					$(this.$pagerItems.get(this.cursorPrevious)).removeClass(activeClassName);
+					$(this.$pagerItems.get(this.cursor)).addClass(activeClassName);
+				} else {
+					this.$pagerItems.removeClass(activeClassName);
+
+					for (i = 0; i < itemsLen; i += 1) {
+						if (this.isVisibleItem(i)) {
+							$(this.$pagerItems.get(i)).addClass(activeClassName);
 						}
 					}
 				}
