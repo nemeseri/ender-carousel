@@ -65,7 +65,7 @@
 	filter:alpha(opacity=40);
 }
 
-.window li {
+.window-active li {
 	opacity: 0.4;
 	-webkit-transition: opacity 0.4s ease;
 	-moz-transition: opacity 0.4s ease;
@@ -74,7 +74,7 @@
 	transition: opacity 0.4s ease;	
 }
 
-.window .active {
+.window-active .active {
 	opacity: 1;
 }
 

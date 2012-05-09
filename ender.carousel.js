@@ -224,8 +224,10 @@
 			this.cursor = this.getActiveIndex();
 			
 			if (this.cursor < 0) {
-				for (var i = 0; i < this.pageSize; i += 1) {
-					$(this.$items.get(i)).addClass("active");
+				if (this.options.activeClass) {
+					for (var i = 0; i < this.pageSize; i += 1) {
+						$(this.$items.get(i)).addClass("active");
+					}
 				}
 
 				this.cursor = 0;
