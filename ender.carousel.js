@@ -252,10 +252,6 @@
 			this.$nextPager.click(proxy(this.nextPage, this));
 			this.$prevPager.click(proxy(this.prevPage, this));
 
-			if (opt.pager) {
-				this.$pagerItems.click(proxy(this.pagerToItem, this));
-			}
-
 			if (opt.keyboard) {
 				$(document).bind("keyup", proxy(this.onKeyUp, this));
 			}
@@ -288,7 +284,8 @@
 		},
 
 		createPager: function () {
-			var pagerItemsFrag = document.createDocumentFragment(),
+			var self = this,
+				pagerItemsFrag = document.createDocumentFragment(),
 				pagerItem,
 				itemsLen = this.$items.length,
 				i;
@@ -297,8 +294,20 @@
 				this.options.pager
 			);
 
+			function pagerClickEvent(pos, len) {
+				return function () {
+					if (pos > (len - self.pageSize)) {
+						self.scrollToItem(len - self.pageSize);
+					} else {
+						self.scrollToItem(pos);
+					}
+				};
+			}
+
 			for (i = 0; i < itemsLen; i += 1) {
 				pagerItem = document.createElement("li");
+
+				pagerItem.onclick = pagerClickEvent(i, itemsLen);
 
 				if (i < this.pageSize) {
 					pagerItem.className = "active";
@@ -308,24 +317,6 @@
 			}
 
 			this.$pager.empty().get(0).appendChild(pagerItemsFrag);
-		},
-
-		pagerToItem: function (e) {
-			var i = 0,
-				li = e.target,
-				itemsLen = this.$items.length;
-
-			e.preventDefault();
-
-			while((li = li.previousSibling) !== null) {
-				i += 1;
-			}
-
-			if (i > (itemsLen - this.pageSize)) {
-				this.scrollToItem(itemsLen - this.pageSize);
-			} else {
-				this.scrollToItem(i);
-			}
 		},
 
 		nextPage: function (e) {
