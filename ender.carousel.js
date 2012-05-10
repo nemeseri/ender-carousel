@@ -210,6 +210,10 @@
 			this.setDimensions();
 
 			if (opt.pager) {
+				this.$pager = this.$el.find(
+					opt.pager
+				);
+
 				this.createPager();
 
 				this.$pagerItems = this.$pager.find("li");
@@ -289,10 +293,6 @@
 				pagerItem,
 				itemsLen = this.$items.length,
 				i;
-
-			this.$pager = this.$el.find(
-				this.options.pager
-			);
 
 			function pagerClickEvent(pos, len) {
 				return function () {
