@@ -174,6 +174,7 @@
 			this.options = {
 				window: ".window",
 				items: "li",
+				pager: null,
 				nextPager: "a.next",
 				prevPager: "a.prev",
 				activeClass: null,
@@ -208,6 +209,16 @@
 
 			this.setDimensions();
 
+			if (opt.pager) {
+				this.$pager = this.$el.find(
+					opt.pager
+				);
+
+				this.createPager();
+
+				this.$pagerItems = this.$pager.find("li");
+			}
+
 			if (this.$items.length <= this.pageSize) {
 				this.hidePrevPager();
 				this.hideNextPager();
@@ -215,8 +226,14 @@
 			}
 
 			this.cursor = this.getActiveIndex();
+			
 			if (this.cursor < 0) {
-				this.$items.first().addClass("active");
+				if (this.options.activeClass) {
+					for (var i = 0; i < this.pageSize; i += 1) {
+						$(this.$items.get(i)).addClass("active");
+					}
+				}
+
 				this.cursor = 0;
 			}
 
@@ -268,6 +285,36 @@
 			this.pageDimension = this.pageSize * this.itemDimension;
 			this.lastPosition = this.$items.length - this.pageSize;
 
+		},
+
+		createPager: function () {
+			var itemsLen = this.$items.length,
+				pagerItemsFrag = document.createDocumentFragment(),
+				pagerItem,
+				i;
+
+			for (i = 0; i < itemsLen; i += 1) {
+				pagerItem = document.createElement("li");
+				$pagerItem = $(pagerItem);
+				
+				$pagerItem.click(proxy(this.usePager, this, i, itemsLen));
+
+				if (i < this.pageSize) {
+					$pagerItem.addClass("active");
+				}
+
+				pagerItemsFrag.appendChild(pagerItem);
+			}
+
+			this.$pager.empty().get(0).appendChild(pagerItemsFrag);
+		},
+
+		usePager: function (pos, len) {
+			if (pos > (len - this.pageSize)) {
+				this.scrollToItem(len - this.pageSize);
+			} else {
+				this.scrollToItem(pos);
+			}
 		},
 
 		nextPage: function (e) {
@@ -324,11 +371,11 @@
 				scrollTo,
 				direction = this.options.vertical ? "top" : "left",
 				animObj = {},
-				activeClass,
-				itemslen,
+				activeClassName = this.options.activeClass || "active",
+				itemsLen = this.$items.length,
 				i;
 
-			this.cursor_previous = this.cursor;
+			this.cursorPrevious = this.cursor;
 			this.cursor = idx;
 
 			if (this.cursor === 0) {
@@ -361,7 +408,7 @@
 				activeClass = this.options.activeClass;
 
 				if (this.getPageSize() === 1) {
-					$(this.$items.get(this.cursor_previous)).removeClass(activeClass);
+					$(this.$items.get(this.cursorPrevious)).removeClass(activeClass);
 					$(this.$items.get(idx)).addClass(activeClass);
 				} else {
 					itemslen = this.$items.length;
@@ -370,6 +417,21 @@
 					for (i = 0; i < itemslen; i += 1) {
 						if (this.isVisibleItem(i)) {
 							$(this.$items.get(i)).addClass(activeClass);
+						}
+					}
+				}
+			}
+
+			if (this.options.pager) {
+				if (this.getPageSize() === 1) {
+					$(this.$pagerItems.get(this.cursorPrevious)).removeClass(activeClassName);
+					$(this.$pagerItems.get(this.cursor)).addClass(activeClassName);
+				} else {
+					this.$pagerItems.removeClass(activeClassName);
+
+					for (i = 0; i < itemsLen; i += 1) {
+						if (this.isVisibleItem(i)) {
+							$(this.$pagerItems.get(i)).addClass(activeClassName);
 						}
 					}
 				}

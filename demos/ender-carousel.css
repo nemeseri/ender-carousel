@@ -3,6 +3,7 @@
 	margin: 20px 0;
 	padding: 0 29px;
 	position: relative;
+	overflow: hidden;
 
 	-webkit-user-select:none;
 	-moz-user-select:none;
@@ -16,7 +17,7 @@
 	height: 100px;
 }
 
-.carousel ul {
+.window ul {
 	list-style: none;
 	margin: 0;
 	width: 10000px;
@@ -25,16 +26,16 @@
 	position: absolute;
 }
 
-.carousel li {
+.window li {
 	float: left;
 	margin: 0 0 0 3px;
 }
 
-.carousel li:first-child {
+.window li:first-child {
 	margin: 0;
 }
 
-.carousel img {
+.window img {
 	display: block;
 }
 
@@ -62,4 +63,59 @@
 	opacity: 0.4;
 	-moz-opacity: 0.4;
 	filter:alpha(opacity=40);
+}
+
+.window-active li {
+	opacity: 0.4;
+	-webkit-transition: opacity 0.4s ease;
+	-moz-transition: opacity 0.4s ease;
+	-ms-transition: opacity 0.4s ease;
+	-o-transition: opacity 0.4s ease;
+	transition: opacity 0.4s ease;	
+}
+
+.window-active .active {
+	opacity: 1;
+}
+
+#pager {
+	display: block;
+	position: relative;
+	float: left;
+	left: 50%;
+	margin-top: 10px;
+}
+
+#pager ul {
+	position: relative;
+	float: left;
+	left: -50%;
+	font-size: 0;
+	overflow: hidden;
+}
+
+#pager li {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	margin-right: 1px;
+	list-style: none;
+	background-color: #aaa;
+	-webkit-transition: background-color 0.4s ease;
+	-moz-transition: background-color 0.4s ease;
+	-ms-transition: background-color 0.4s ease;
+	-o-transition: background-color 0.4s ease;
+	transition: background-color 0.4s ease;	
+}
+
+#pager li:hover {
+	background-color: #ccc;
+}
+
+#pager .active {
+	background-color: #cc6600;
+}
+
+#pager .active:hover {
+	background-color: #ff6600;
 }

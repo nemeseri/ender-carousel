@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html lang="en-us">
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>Ender-carousel: Full Feature Demo</title>
+		<link rel="stylesheet" href="main.css" type="text/css">
+		<link rel="stylesheet" href="ender-carousel.css" type="text/css">
+
+		<!-- syntax highlights -->
+		<link rel="stylesheet" href="http://yandex.st/highlightjs/6.1/styles/github.min.css">
+	</head>
+	<body>
+		<div id="container" class="demo">
+
+			<ul class="breadcrumb">
+				<li><a href="../index.html" class="back-home">Main Page &raquo;</a></li>
+			</ul>
+
+			<h1>Full Feature Demo</h1>
+
+
+<!-- ========= CAROUSEL HTML START ========== -->
+
+			<div class="carousel">
+				<div class="window window-active">
+					<ul>
+						<li>
+							<img src="http://farm6.static.flickr.com/5008/5248981729_3a05d42d32_t.jpg" alt="Undercover" width="100" height="100">
+						</li>
+						<li>
+							<img src="http://farm6.static.flickr.com/5123/5329325629_ba31d93a48_t.jpg" alt="The Raid" width="100" height="100">
+						</li>
+						<li>
+							<img src="http://farm6.static.flickr.com/5250/5348822142_9c1e7e8bdd_t.jpg" alt="The Price of Information" width="100" height="100">
+						</li>
+						<li>
+							<img src="http://farm6.static.flickr.com/5241/5319178865_ab54fb3e02_t.jpg" alt="The Payment" width="100" height="100">
+						</li>
+						<li>
+							<img src="http://farm6.static.flickr.com/5008/5248981729_3a05d42d32_t.jpg" alt="Undercover" width="100" height="100">
+						</li>
+						<li>
+							<img src="http://farm6.static.flickr.com/5123/5329325629_ba31d93a48_t.jpg" alt="The Raid" width="100" height="100">
+						</li>
+						<li>
+							<img src="http://farm6.static.flickr.com/5250/5348822142_9c1e7e8bdd_t.jpg" alt="The Price of Information" width="100" height="100">
+						</li>
+						<li>
+							<img src="http://farm6.static.flickr.com/5241/5319178865_ab54fb3e02_t.jpg" alt="The Payment" width="100" height="100">
+						</li>
+						<li>
+							<img src="http://farm6.static.flickr.com/5008/5248981729_3a05d42d32_t.jpg" alt="Undercover" width="100" height="100">
+						</li>
+						<li>
+							<img src="http://farm6.static.flickr.com/5123/5329325629_ba31d93a48_t.jpg" alt="The Raid" width="100" height="100">
+						</li>
+						<li>
+							<img src="http://farm6.static.flickr.com/5250/5348822142_9c1e7e8bdd_t.jpg" alt="The Price of Information" width="100" height="100">
+						</li>
+						<li>
+							<img src="http://farm6.static.flickr.com/5241/5319178865_ab54fb3e02_t.jpg" alt="The Payment" width="100" height="100">
+						</li>
+					</ul>
+				</div> <!-- .window -->
+
+				<div id="pager">
+					<ul></ul>
+				</div>
+
+				<a class="prev disabled">Previous</a>
+				<a class="next">Next</a>
+			</div> <!-- .carousel -->
+
+<!-- ========= CAROUSEL HTML END ========== -->
+
+
+			<h2>Pager</h2>
+
+			<h3>Example HTML</h3>
+
+<pre><code>&lt;div class=&quot;carousel&quot;&gt;
+    &lt;div class=&quot;window&quot;&gt;
+        [...]
+    &lt;/div&gt; &lt;!-- .window --&gt;
+
+    &lt;div id="pager"&gt;
+        &lt;ul&gt;&lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;a class=&quot;prev&quot;&gt;Previous&lt;/a&gt;
+    &lt;a class=&quot;next&quot;&gt;Next&lt;/a&gt;
+&lt;/div&gt; &lt;!-- .carousel --&gt;
+</code></pre>
+
+			<h3>Example CSS</h3>
+
+<pre><code>#pager {
+    display: block;
+    position: relative;
+    float: left;
+    left: 50%;
+    margin-top: 10px;
+}
+
+#pager ul {
+    position: relative;
+    float: left;
+    left: -50%;
+    font-size: 0;
+    overflow: hidden;
+}
+
+#pager li {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    list-style: none;
+    background-color: #aaa;
+}
+
+#pager .active {
+    background-color: #cc6600;
+}</code></pre>
+
+            <h2>Active item(s)</h2>
+
+            <h3>Example CSS</h3>
+
+<pre><code>.window li {
+    opacity: 0.4;
+}
+
+.window .active {
+    opacity: 1;
+}</code></pre>
+
+			<h2>Initialize the ender-carousel plugin</h2>
+
+			<p>To enable the pager use the 'pager' property, to enable active item(s) class names use 'activeClass'.</p>
+
+<pre><code>$(document).ready(function () {
+    $(&quot;.carousel&quot;).carousel({
+        pager: "#pager ul",
+        activeClass: "active",
+        keyboard: true
+    });
+});
+</code></pre>
+
+
+			<p><a href="../index.html">Go back to the documentation</a></p>
+
+		</div> <!-- #container -->
+
+		<script src="../ender.min.js"></script>
+		<script src="../ender.carousel.js"></script>
+		<script>
+			$(document).ready(function () {
+				$(".carousel").carousel({
+					pager: "#pager ul",
+					activeClass: "active",
+					keyboard: true
+				});
+			});
+		</script>
+
+
+		<script src="http://yandex.st/highlightjs/6.1/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+		<script type="text/javascript">
+		  var _gaq = _gaq || [];
+		  _gaq.push(['_setAccount', 'UA-25617420-1']);
+		  _gaq.push(['_trackPageview']);
+		  (function() {
+		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		  })();
+		</script>
+	</body>
+</html>
