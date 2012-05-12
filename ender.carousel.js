@@ -288,35 +288,33 @@
 		},
 
 		createPager: function () {
-			var self = this,
+			var itemsLen = this.$items.length,
 				pagerItemsFrag = document.createDocumentFragment(),
 				pagerItem,
-				itemsLen = this.$items.length,
 				i;
-
-			function pagerClickEvent(pos, len) {
-				return function () {
-					if (pos > (len - self.pageSize)) {
-						self.scrollToItem(len - self.pageSize);
-					} else {
-						self.scrollToItem(pos);
-					}
-				};
-			}
 
 			for (i = 0; i < itemsLen; i += 1) {
 				pagerItem = document.createElement("li");
-
-				pagerItem.onclick = pagerClickEvent(i, itemsLen);
+				$pagerItem = $(pagerItem);
+				
+				$pagerItem.click(proxy(this.usePager, this, i, itemsLen));
 
 				if (i < this.pageSize) {
-					pagerItem.className = "active";
+					$pagerItem.addClass("active");
 				}
 
 				pagerItemsFrag.appendChild(pagerItem);
 			}
 
 			this.$pager.empty().get(0).appendChild(pagerItemsFrag);
+		},
+
+		usePager: function (pos, len) {
+			if (pos > (len - this.pageSize)) {
+				this.scrollToItem(len - this.pageSize);
+			} else {
+				this.scrollToItem(pos);
+			}
 		},
 
 		nextPage: function (e) {
