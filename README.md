@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/nemeseri/ender-carousel.png)](http://travis-ci.org/nemeseri/ender-carousel)
 # ender-carousel
 ----
 
