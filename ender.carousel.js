@@ -21,9 +21,9 @@
 		Mozilla and Webkit support only
 	*/
 	transition = (function () {
-		var st = document.createElement("div").style,
-			transitionEnd = "TransitionEnd",
-			transitionProp = "Transition",
+		var st = document.createElement('div').style,
+			transitionEnd = 'TransitionEnd',
+			transitionProp = 'Transition',
 			support = st.transition !== undefined ||
 				st.WebkitTransition !== undefined ||
 				st.MozTransition !== undefined;
@@ -31,17 +31,17 @@
 		return support && {
 			prop: (function () {
 				if (st.WebkitTransition !== undefined) {
-					transitionProp = "WebkitTransition";
+					transitionProp = 'WebkitTransition';
 				} else if (st.MozTransition !== undefined) {
-					transitionProp = "MozTransition";
+					transitionProp = 'MozTransition';
 				}
 				return transitionProp;
 			}()),
 			end: (function () {
 				if (st.WebkitTransition !== undefined) {
-					transitionEnd = "webkitTransitionEnd";
+					transitionEnd = 'webkitTransitionEnd';
 				} else if (st.MozTransition !== undefined) {
-					transitionEnd = "transitionend";
+					transitionEnd = 'transitionend';
 				}
 				return transitionEnd;
 			}())
@@ -75,7 +75,7 @@
 	}
 
 	function clone(obj) {
-		if (null === obj || "object" !== typeof obj) {
+		if (null === obj || 'object' !== typeof obj) {
 			return obj;
 		}
 		var copy = obj.constructor(),
@@ -124,7 +124,7 @@
 		// css3 setted, if available apply the css
 		if (options.css3transition && transition) {
 			dummy = el[0].offsetWidth; // force reflow; source: bootstrap
-			el[0].style[transition.prop] = "all " + animation.duration + "ms";
+			el[0].style[transition.prop] = 'all ' + animation.duration + 'ms';
 
 			// takaritas
 			delete animation.duration;
@@ -132,15 +132,15 @@
 
 			el.css(animation);
 			//el.unbind(transition.end);
-			el.bind(transition.end, function () {
+			el.on(transition.end, function () {
 				// delete transition properties and events
-				el.unbind(transition.end);
-				el[0].style[transition.prop] = "none";
+				el.off(transition.end);
+				el[0].style[transition.prop] = 'none';
 				complete();
 			});
 		} else if (window.ender) {
 			// use morpheus
-			el.animate(extend(animation, {"complete": complete}));
+			el.animate(extend(animation, {'complete': complete}));
 		} else {
 			// use animate from jquery
 			el.animate(animation, animation.duration, animation.easing, complete);
@@ -172,13 +172,13 @@
 			var opt;
 
 			this.options = {
-				window: ".window",
-				items: "li",
+				window: '.window',
+				items: 'li',
 				pager: null,
-				nextPager: "a.next",
-				prevPager: "a.prev",
+				nextPager: 'a.next',
+				prevPager: 'a.prev',
 				activeClass: null,
-				disabledClass: "disabled",
+				disabledClass: 'disabled',
 				duration: 400,
 				vertical: false,
 				keyboard: false,
@@ -216,7 +216,7 @@
 
 				this.createPager();
 
-				this.$pagerItems = this.$pager.find("li");
+				this.$pagerItems = this.$pager.find('li');
 			}
 
 			if (this.$items.length <= this.pageSize) {
@@ -226,11 +226,11 @@
 			}
 
 			this.cursor = this.getActiveIndex();
-			
+
 			if (this.cursor < 0) {
 				if (this.options.activeClass) {
 					for (var i = 0; i < this.pageSize; i += 1) {
-						$(this.$items.get(i)).addClass("active");
+						$(this.$items.get(i)).addClass('active');
 					}
 				}
 
@@ -253,24 +253,24 @@
 				this.hideNextPager();
 			}
 
-			this.$nextPager.click(proxy(this.nextPage, this));
-			this.$prevPager.click(proxy(this.prevPage, this));
+			this.$nextPager.on('click', proxy(this.nextPage, this));
+			this.$prevPager.on('click', proxy(this.prevPage, this));
 
 			if (opt.keyboard) {
-				$(document).bind("keyup", proxy(this.onKeyUp, this));
+				$(document).on('keyup', proxy(this.onKeyUp, this));
 			}
 
-			this.$el.addClass("carousel-inited");
+			this.$el.addClass('carousel-inited');
 		},
 
 		setDimensions: function () {
 			var $secondItem,
-				alignedDimension = "width",
-				marginType = ["margin-left", "margin-right"];
+				alignedDimension = 'width',
+				marginType = ['margin-left', 'margin-right'];
 
 			if (this.options.vertical) {
-				alignedDimension = "height";
-				marginType = ["margin-top", "margin-bottom"];
+				alignedDimension = 'height';
+				marginType = ['margin-top', 'margin-bottom'];
 			}
 
 			$secondItem = this.$items.first().next();
@@ -294,13 +294,13 @@
 				i;
 
 			for (i = 0; i < itemsLen; i += 1) {
-				pagerItem = document.createElement("li");
+				pagerItem = document.createElement('li');
 				$pagerItem = $(pagerItem);
-				
-				$pagerItem.click(proxy(this.usePager, this, i, itemsLen));
+
+				$pagerItem.on('click', proxy(this.usePager, this, i, itemsLen));
 
 				if (i < this.pageSize) {
-					$pagerItem.addClass("active");
+					$pagerItem.addClass('active');
 				}
 
 				pagerItemsFrag.appendChild(pagerItem);
@@ -318,7 +318,7 @@
 		},
 
 		nextPage: function (e) {
-			if (typeof(e) !== "undefined") {
+			if (typeof(e) !== 'undefined') {
 				e.preventDefault();
 			}
 
@@ -335,7 +335,7 @@
 		},
 
 		prevPage: function (e) {
-			if (typeof(e) !== "undefined") {
+			if (typeof(e) !== 'undefined') {
 				e.preventDefault();
 			}
 
@@ -369,9 +369,9 @@
 		scrollToItem: function (idx, doNotAnimate) {
 			var animateTo,
 				scrollTo,
-				direction = this.options.vertical ? "top" : "left",
+				direction = this.options.vertical ? 'top' : 'left',
 				animObj = {},
-				activeClassName = this.options.activeClass || "active",
+				activeClassName = this.options.activeClass || 'active',
 				itemsLen = this.$items.length,
 				i;
 
@@ -458,7 +458,7 @@
 				il = this.$items.length;
 
 			for (; i < il; i += 1) {
-				if ($(this.$items.get(i)).hasClass("active")) {
+				if ($(this.$items.get(i)).hasClass('active')) {
 					return i;
 				}
 			}
@@ -517,4 +517,4 @@
 	$.fn.carousel = function (options) {
 		return new Carousel(this.first(), options);
 	};
-}(window.ender || window.jQuery);
+}(window.ender || window.jQuery || window.Zepto);
